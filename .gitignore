@@ -1,0 +1,17 @@
+# Dependencies
+node_modules/
+
+# Cypress generated files
+cypress/videos/
+cypress/screenshots/
+cypress/reports/
+
+# Logs
+*.log
+
+# Documentation (temporary/internal)
+OPTIMIZATION_REPORT.md
+
+# OS files
+.DS_Store
+Thumbs.db
