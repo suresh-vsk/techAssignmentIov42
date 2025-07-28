@@ -4,7 +4,16 @@
   "description": "",
   "main": "cypress.config.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "cypress run",
+    "test:headless": "cypress run --headless",
+    "test:chrome": "cypress run --browser chrome --headless",
+    "test:fast": "cypress run --headless --reporter min",
+    "test:login": "cypress run --spec 'cypress/e2e/login.feature' --headless",
+    "test:inventory": "cypress run --spec 'cypress/e2e/inventory.feature' --headless",
+    "test:cart": "cypress run --spec 'cypress/e2e/cart.feature' --headless",
+    "test:sql-demo": "cypress run --spec 'cypress/e2e/inventory.feature' --headless",
+    "test:parallel": "cypress run --record --parallel",
+    "open": "cypress open"
   },
   "private": true,
   "dependencies": {

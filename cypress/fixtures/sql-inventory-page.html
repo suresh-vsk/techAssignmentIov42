@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>SQL Authenticated Inventory</title>
+    <style>
+        .inventory_container { padding: 20px; }
+        .inventory_item { border: 1px solid #ccc; margin: 10px; padding: 10px; }
+        .inventory_item_name { font-weight: bold; }
+        .inventory_item_price { color: green; }
+        .btn_inventory { background: blue; color: white; padding: 5px 10px; }
+        .product_sort_container { margin: 10px 0; }
+        .sql-auth-info { background: #e8f5e8; padding: 10px; margin-bottom: 20px; }
+    </style>
+</head>
+<body>
+    <div class="sql-auth-info">
+        <h2>🗄️ SQL Authentication Success!</h2>
+        <p>User: <strong>{{username}}</strong> authenticated via SQL database</p>
+        <p>No UI login required - Pure SQL stub approach</p>
+    </div>
+    
+    <div class="inventory_container">
+        <div class="header_secondary_container">
+            <span class="title">Products</span>
+            <select class="product_sort_container">
+                <option value="az">Name (A to Z)</option>
+                <option value="za">Name (Z to A)</option>
+                <option value="lohi">Price (low to high)</option>
+                <option value="hilo">Price (high to low)</option>
+            </select>
+        </div>
+        
+        <div class="inventory_list">
+            <div class="inventory_item" data-test="inventory-item" data-price="29.99">
+                <div class="inventory_item_name" data-test="inventory-item-name">Sauce Labs Backpack</div>
+                <button class="btn btn_primary btn_small btn_inventory " data-test="add-to-cart-sauce-labs-backpack">Add to cart</button>
+                <div class="inventory_item_price" data-test="inventory-item-price">$29.99</div>
+            </div>
+            
+            <div class="inventory_item" data-test="inventory-item" data-price="9.99">
+                <div class="inventory_item_name" data-test="inventory-item-name">Sauce Labs Bike Light</div>
+                <button class="btn btn_primary btn_small btn_inventory " data-test="add-to-cart-sauce-labs-bike-light">Add to cart</button>
+                <div class="inventory_item_price" data-test="inventory-item-price">$9.99</div>
+            </div>
+            
+            <div class="inventory_item" data-test="inventory-item" data-price="15.99">
+                <div class="inventory_item_name" data-test="inventory-item-name">Sauce Labs Bolt T-Shirt</div>
+                <button class="btn btn_primary btn_small btn_inventory " data-test="add-to-cart-sauce-labs-bolt-t-shirt">Add to cart</button>
+                <div class="inventory_item_price" data-test="inventory-item-price">$15.99</div>
+            </div>
+            
+            <div class="inventory_item" data-test="inventory-item" data-price="49.99">
+                <div class="inventory_item_name" data-test="inventory-item-name">Sauce Labs Fleece Jacket</div>
+                <button class="btn btn_primary btn_small btn_inventory " data-test="add-to-cart-sauce-labs-fleece-jacket">Add to cart</button>
+                <div class="inventory_item_price" data-test="inventory-item-price">$49.99</div>
+            </div>
+            
+            <div class="inventory_item" data-test="inventory-item" data-price="7.99">
+                <div class="inventory_item_name" data-test="inventory-item-name">Sauce Labs Onesie</div>
+                <button class="btn btn_primary btn_small btn_inventory " data-test="add-to-cart-sauce-labs-onesie">Add to cart</button>
+                <div class="inventory_item_price" data-test="inventory-item-price">$7.99</div>
+            </div>
+            
+            <div class="inventory_item" data-test="inventory-item" data-price="15.99">
+                <div class="inventory_item_name" data-test="inventory-item-name">Test.allTheThings() T-Shirt (Red)</div>
+                <button class="btn btn_primary btn_small btn_inventory " data-test="add-to-cart-test.allthethings()-t-shirt-(red)">Add to cart</button>
+                <div class="inventory_item_price" data-test="inventory-item-price">$15.99</div>
+            </div>
+        </div>
+        
+        <div id="shopping_cart_container">
+            <a class="shopping_cart_link" href="#" data-test="shopping-cart-link">
+                <!-- Cart badge will be dynamically added when items are added -->
+            </a>
+        </div>
+    </div>
+    
+    <script>
+        // SQL Stub: Cart functionality
+        let cartCount = 0;
+        const cartContainer = document.querySelector('[data-test="shopping-cart-link"]');
+        
+        // Update cart badge display
+        function updateCartBadge() {
+            // Remove existing badge if it exists
+            const existingBadge = document.querySelector('[data-test="shopping-cart-badge"]');
+            if (existingBadge) {
+                existingBadge.remove();
+            }
+            
+            // Only add badge if cart count > 0
+            if (cartCount > 0) {
+                const newBadge = document.createElement('span');
+                newBadge.className = 'shopping_cart_badge';
+                newBadge.setAttribute('data-test', 'shopping-cart-badge');
+                newBadge.textContent = cartCount.toString();
+                cartContainer.appendChild(newBadge);
+            }
+        }
+        
+        // Add to cart functionality
+        document.addEventListener('click', function(e) {
+            if (e.target.classList.contains('btn_inventory') && e.target.textContent.includes('Add to cart')) {
+                cartCount++;
+                e.target.textContent = 'Remove';
+                // Change from btn_primary to btn_secondary (keeping btn_small btn_inventory)
+                e.target.className = 'btn btn_secondary btn_small btn_inventory ';
+                updateCartBadge();
+                console.log('🗄️ SQL Stub: Added to cart, count:', cartCount);
+            } else if (e.target.classList.contains('btn_inventory') && e.target.textContent.includes('Remove')) {
+                cartCount--;
+                e.target.textContent = 'Add to cart';
+                // Change from btn_secondary back to btn_primary  
+                e.target.className = 'btn btn_primary btn_small btn_inventory ';
+                updateCartBadge();
+                console.log('🗄️ SQL Stub: Removed from cart, count:', cartCount);
+            }
+        });
+
+        // SQL Stub: Dynamic sorting functionality
+        document.querySelector('.product_sort_container').addEventListener('change', function(e) {
+            const sortValue = e.target.value;
+            const inventoryList = document.querySelector('.inventory_list');
+            const items = Array.from(inventoryList.querySelectorAll('.inventory_item'));
+            
+            items.sort((a, b) => {
+                if (sortValue === 'lohi') {
+                    // Price low to high
+                    return parseFloat(a.dataset.price) - parseFloat(b.dataset.price);
+                } else if (sortValue === 'hilo') {
+                    // Price high to low  
+                    return parseFloat(b.dataset.price) - parseFloat(a.dataset.price);
+                } else if (sortValue === 'az') {
+                    // Name A to Z
+                    const nameA = a.querySelector('[data-test="inventory-item-name"]').textContent;
+                    const nameB = b.querySelector('[data-test="inventory-item-name"]').textContent;
+                    return nameA.localeCompare(nameB);
+                } else if (sortValue === 'za') {
+                    // Name Z to A
+                    const nameA = a.querySelector('[data-test="inventory-item-name"]').textContent;
+                    const nameB = b.querySelector('[data-test="inventory-item-name"]').textContent;
+                    return nameB.localeCompare(nameA);
+                }
+            });
+            
+            // Re-append sorted items
+            items.forEach(item => inventoryList.appendChild(item));
+            
+            console.log('🗄️ SQL Stub: Sorted products by', sortValue);
+        });
+    </script>
+</body>
+</html>

@@ -4,13 +4,11 @@ import loginPage from "../../pages/loginPage";
 import { addProductsToCart, removeProductsFromCart, waitForPageReady } from "../../support/utils";
 
 Given("I am on the products page as {string}", (username) => {
-    loginPage.visit()
-    loginPage.enterUsername(username)
-    loginPage.enterPassword("secret_sauce")
-    loginPage.clickSubmit()
-    cy.url().should('include', 'inventory.html')
-    // Wait for the inventory page to fully load
-    cy.get(inventoryPage.inventoryItem).should('be.visible')
+    // SQL-based Fast Authentication (with embedded HTML)
+    cy.sqlNavigateAuthenticated('/inventory.html', username);
+    
+    // Verify products page is loaded
+    cy.get('[data-test="inventory-item"]').should('be.visible');
 });
 
 When("I sort products by {string}", (sortingOption) => {
