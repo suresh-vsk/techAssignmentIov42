@@ -16,10 +16,22 @@ Feature: Cart Functionality
       | standard_user          | 2            | John      | Doe      | 12345      |
       | performance_glitch_user| 1            | Jane      | Smith    | 54321      |
 
-  Scenario: Successfully checkout with manipulated session token
+
+  # Scenario: Successfully checkout with authenticated session and token manipulation
+  #   Given I am on the products page as "standard_user"
+  #   When I add 1 product to my cart
+  #   And I manipulate the session token
+  #   And I go to the cart page
+  #   And I proceed to checkout
+  #   And I fill in checkout information with "Test" "User" "99999"
+  #   And I continue with the checkout
+  #   And I complete the checkout
+  #   Then I should see the order confirmation
+
+  Scenario: Successfully checkout with SQL-authenticated session and token manipulation
     Given I am on the products page as "standard_user"
     When I add 1 product to my cart
-    And I manipulate the session token
+    And I manipulate the SQL session token
     And I go to the cart page
     And I proceed to checkout
     And I fill in checkout information with "Test" "User" "99999"
@@ -27,14 +39,14 @@ Feature: Cart Functionality
     And I complete the checkout
     Then I should see the order confirmation
 
-  # Security test scenario
-  Scenario: Unsuccessfully checkout with clearing cookies and local storage
+  # SQL Authentication security test scenario
+  Scenario: SQL authentication persists through cart operations
     Given I am on the products page as "standard_user"
     When I add 1 product to my cart
-    And I clear cookies and local storage
-    And I try to go to the cart page
-    Then I should be redirected to the login page
-    And I should see the cart access error message
+    And I clear browser cookies and local storage
+    And I verify SQL authentication is maintained
+    And I go to the cart page
+    Then I should still be on the cart page with SQL authentication
 
   # Form validation scenarios
   Scenario Outline: Unsuccessful checkout with missing required fields

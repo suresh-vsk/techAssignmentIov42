@@ -69,7 +69,7 @@
         </div>
         
         <div id="shopping_cart_container">
-            <a class="shopping_cart_link" href="#" data-test="shopping-cart-link">
+            <a class="shopping_cart_link" href="/cart.html" data-test="shopping-cart-link">
                 <!-- Cart badge will be dynamically added when items are added -->
             </a>
         </div>
@@ -79,6 +79,13 @@
         // SQL Stub: Cart functionality
         let cartCount = 0;
         const cartContainer = document.querySelector('[data-test="shopping-cart-link"]');
+        
+        // Initialize cart count from localStorage
+        function initializeCartCount() {
+            const cartData = JSON.parse(localStorage.getItem('sql_cart_items') || '[]');
+            cartCount = cartData.length;
+            updateCartBadge();
+        }
         
         // Update cart badge display
         function updateCartBadge() {
@@ -105,6 +112,21 @@
                 e.target.textContent = 'Remove';
                 // Change from btn_primary to btn_secondary (keeping btn_small btn_inventory)
                 e.target.className = 'btn btn_secondary btn_small btn_inventory ';
+                
+                // Store cart item data for cart page
+                const itemContainer = e.target.closest('.inventory_item');
+                const itemName = itemContainer.querySelector('[data-test="inventory-item-name"]').textContent;
+                const itemPrice = itemContainer.querySelector('[data-test="inventory-item-price"]').textContent;
+                const itemId = e.target.getAttribute('data-test').replace('add-to-cart-', '');
+                
+                const cartData = JSON.parse(localStorage.getItem('sql_cart_items') || '[]');
+                cartData.push({
+                    id: itemId,
+                    name: itemName,
+                    price: itemPrice
+                });
+                localStorage.setItem('sql_cart_items', JSON.stringify(cartData));
+                
                 updateCartBadge();
                 console.log('🗄️ SQL Stub: Added to cart, count:', cartCount);
             } else if (e.target.classList.contains('btn_inventory') && e.target.textContent.includes('Remove')) {
@@ -112,6 +134,14 @@
                 e.target.textContent = 'Add to cart';
                 // Change from btn_secondary back to btn_primary  
                 e.target.className = 'btn btn_primary btn_small btn_inventory ';
+                
+                // Remove item from cart data
+                const itemContainer = e.target.closest('.inventory_item');
+                const itemName = itemContainer.querySelector('[data-test="inventory-item-name"]').textContent;
+                const cartData = JSON.parse(localStorage.getItem('sql_cart_items') || '[]');
+                const updatedCart = cartData.filter(item => item.name !== itemName);
+                localStorage.setItem('sql_cart_items', JSON.stringify(updatedCart));
+                
                 updateCartBadge();
                 console.log('🗄️ SQL Stub: Removed from cart, count:', cartCount);
             }
@@ -147,6 +177,11 @@
             items.forEach(item => inventoryList.appendChild(item));
             
             console.log('🗄️ SQL Stub: Sorted products by', sortValue);
+        });
+        
+        // Initialize the cart when page loads
+        document.addEventListener('DOMContentLoaded', function() {
+            initializeCartCount();
         });
     </script>
 </body>

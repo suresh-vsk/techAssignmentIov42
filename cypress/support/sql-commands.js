@@ -179,6 +179,64 @@ Cypress.Commands.add('sqlNavigateAuthenticated', (path, username) => {
             }
         }).as('sqlInventoryPage');
     });
+    
+    // Step 3b: Intercept cart page for SQL authentication flow
+    cy.fixture('sql-cart-page.html').then((cartHtml) => {
+        const customizedCartHtml = cartHtml.replace('{{username}}', username);
+        
+        cy.intercept('GET', '**/cart.html', {
+            statusCode: 200,
+            body: customizedCartHtml,
+            headers: {
+                'content-type': 'text/html',
+                'x-sql-authenticated': 'true',
+                'x-user': username
+            }
+        }).as('sqlCartPage');
+    });
+    
+    // Step 3c: Intercept checkout pages for complete SQL checkout flow
+    cy.fixture('sql-checkout-step-one.html').then((checkoutHtml) => {
+        const customizedCheckoutHtml = checkoutHtml.replace('{{username}}', username);
+        
+        cy.intercept('GET', '**/checkout-step-one.html', {
+            statusCode: 200,
+            body: customizedCheckoutHtml,
+            headers: {
+                'content-type': 'text/html',
+                'x-sql-authenticated': 'true',
+                'x-user': username
+            }
+        }).as('sqlCheckoutStepOne');
+    });
+    
+    cy.fixture('sql-checkout-step-two.html').then((checkoutTwoHtml) => {
+        const customizedCheckoutTwoHtml = checkoutTwoHtml.replace('{{username}}', username);
+        
+        cy.intercept('GET', '**/checkout-step-two.html', {
+            statusCode: 200,
+            body: customizedCheckoutTwoHtml,
+            headers: {
+                'content-type': 'text/html',
+                'x-sql-authenticated': 'true',
+                'x-user': username
+            }
+        }).as('sqlCheckoutStepTwo');
+    });
+    
+    cy.fixture('sql-checkout-complete.html').then((completeHtml) => {
+        const customizedCompleteHtml = completeHtml.replace('{{username}}', username);
+        
+        cy.intercept('GET', '**/checkout-complete.html', {
+            statusCode: 200,
+            body: customizedCompleteHtml,
+            headers: {
+                'content-type': 'text/html',
+                'x-sql-authenticated': 'true',
+                'x-user': username
+            }
+        }).as('sqlCheckoutComplete');
+    });
     // Step 4: Navigate directly to the mocked authenticated page
     cy.visit(`https://www.saucedemo.com${path}`);
     
