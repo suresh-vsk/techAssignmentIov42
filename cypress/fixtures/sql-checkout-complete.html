@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>SQL Authenticated Order Complete</title>
+    <style>
+        .checkout_container { padding: 20px; text-align: center; }
+        .complete_header { font-size: 2em; color: green; margin: 20px 0; }
+        .complete_text { font-size: 1.2em; margin: 10px 0; }
+        .btn_action { background: green; color: white; padding: 10px 20px; margin: 20px; }
+        .sql-auth-info { background: #e8f5e8; padding: 10px; margin-bottom: 20px; }
+        .pony_express { width: 100px; height: 100px; margin: 20px auto; }
+    </style>
+</head>
+<body>
+    <div class="sql-auth-info">
+        <h2>🗄️ SQL Order Complete!</h2>
+        <p>User: <strong>{{username}}</strong> | Order processed via SQL authentication</p>
+    </div>
+    
+    <div class="checkout_container">
+        <h2 class="complete_header" data-test="complete-header">Thank you for your order!</h2>
+        
+        <div class="complete_text">
+            Your order has been dispatched, and will arrive just as fast as the pony can get there!
+        </div>
+        
+        <div class="pony_express" data-test="pony-express">
+            🐎📦
+        </div>
+        
+        <button class="btn_action" data-test="back-to-products" onclick="window.location.href='/inventory.html'">
+            Back Home
+        </button>
+    </div>
+    
+    <script>
+        // Log successful SQL-based checkout
+        console.log('🗄️ SQL Checkout Complete: Order processed with SQL authentication');
+        
+        // Clear any remaining checkout data
+        localStorage.removeItem('sql_checkout_info');
+    </script>
+</body>
+</html>

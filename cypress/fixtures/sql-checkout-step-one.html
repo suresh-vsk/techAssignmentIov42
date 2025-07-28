@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>SQL Authenticated Checkout</title>
+    <style>
+        .checkout_container { padding: 20px; }
+        .checkout_info { border: 1px solid #ccc; margin: 10px; padding: 20px; }
+        .form_input { margin: 10px 0; padding: 10px; width: 200px; }
+        .btn_action { background: green; color: white; padding: 10px 20px; margin: 10px; }
+        .btn_secondary { background: gray; color: white; padding: 10px 20px; margin: 10px; }
+        .sql-auth-info { background: #e8f5e8; padding: 10px; margin-bottom: 20px; }
+        .error { background: #ffebee; color: red; padding: 10px; margin: 10px 0; }
+    </style>
+</head>
+<body>
+    <div class="sql-auth-info">
+        <h2>🗄️ SQL Checkout - Step 1</h2>
+        <p>User: <strong>{{username}}</strong> | Secure SQL checkout process</p>
+    </div>
+    
+    <div class="checkout_container">
+        <div class="header_secondary_container">
+            <span class="title">Checkout: Your Information</span>
+        </div>
+        
+        <div class="checkout_info" data-test="checkout-info-container">
+            <form id="checkout-form">
+                <input type="text" class="form_input" data-test="firstName" placeholder="First Name" />
+                <input type="text" class="form_input" data-test="lastName" placeholder="Last Name" />
+                <input type="text" class="form_input" data-test="postalCode" placeholder="Zip/Postal Code" />
+                
+                <div class="error" data-test="error" style="display: none;"></div>
+                
+                <div class="checkout_buttons">
+                    <button type="button" class="btn_secondary" data-test="cancel" onclick="window.location.href='/cart.html'">Cancel</button>
+                    <button type="button" class="btn_action" data-test="continue" onclick="continueCheckout()">Continue</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    
+    <script>
+        function continueCheckout() {
+            const firstName = document.querySelector('[data-test="firstName"]').value;
+            const lastName = document.querySelector('[data-test="lastName"]').value;
+            const postalCode = document.querySelector('[data-test="postalCode"]').value;
+            const errorElement = document.querySelector('[data-test="error"]');
+            
+            // Validation
+            if (!firstName) {
+                showError('Error: First Name is required');
+                return;
+            }
+            if (!lastName) {
+                showError('Error: Last Name is required');
+                return;
+            }
+            if (!postalCode) {
+                showError('Error: Postal Code is required');
+                return;
+            }
+            
+            // Store checkout info and proceed
+            localStorage.setItem('sql_checkout_info', JSON.stringify({
+                firstName: firstName,
+                lastName: lastName,
+                postalCode: postalCode
+            }));
+            
+            window.location.href = '/checkout-step-two.html';
+        }
+        
+        function showError(message) {
+            const errorElement = document.querySelector('[data-test="error"]');
+            errorElement.textContent = message;
+            errorElement.style.display = 'block';
+        }
+    </script>
+</body>
+</html>

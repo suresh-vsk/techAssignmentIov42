@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>SQL Authenticated Cart</title>
+    <style>
+        .cart_container { padding: 20px; }
+        .cart_item { border: 1px solid #ccc; margin: 10px; padding: 10px; }
+        .cart_item_name { font-weight: bold; }
+        .cart_item_price { color: green; }
+        .btn_secondary { background: red; color: white; padding: 5px 10px; }
+        .btn_action { background: green; color: white; padding: 10px 20px; margin: 10px; }
+        .sql-auth-info { background: #e8f5e8; padding: 10px; margin-bottom: 20px; }
+    </style>
+</head>
+<body>
+    <div class="sql-auth-info">
+        <h2>🗄️ SQL Cart - Authentication Active!</h2>
+        <p>User: <strong>{{username}}</strong> | Cart managed via SQL session</p>
+    </div>
+    
+    <div class="cart_container">
+        <div class="header_secondary_container">
+            <span class="title">Your Cart</span>
+            <div id="shopping_cart_container">
+                <a class="shopping_cart_link" href="/cart.html" data-test="shopping-cart-link">
+                    <!-- Cart badge will be dynamically added -->
+                </a>
+            </div>
+        </div>
+        
+        <div class="cart_list" data-test="cart-list">
+            <!-- Cart items will be populated dynamically -->
+        </div>
+        
+        <div class="cart_footer">
+            <button class="btn_secondary" data-test="continue-shopping" onclick="window.location.href='/inventory.html'">Continue Shopping</button>
+            <button class="btn_action" data-test="checkout" onclick="proceedToCheckout()">Checkout</button>
+        </div>
+    </div>
+    
+    <script>
+        // SQL Cart: Populate cart items based on localStorage cart data
+        function populateCart() {
+            const cartList = document.querySelector('[data-test="cart-list"]');
+            const cartData = JSON.parse(localStorage.getItem('sql_cart_items') || '[]');
+            
+            if (cartData.length === 0) {
+                cartList.innerHTML = '<div class="cart_empty">Your cart is empty</div>';
+                return;
+            }
+            
+            cartList.innerHTML = '';
+            cartData.forEach((item, index) => {
+                const cartItemHtml = `
+                    <div class="cart_item" data-test="cart-item">
+                        <div class="cart_item_name" data-test="inventory-item-name">${item.name}</div>
+                        <div class="cart_item_price" data-test="inventory-item-price">${item.price}</div>
+                        <button class="btn_secondary" data-test="remove-${item.id}" onclick="removeFromCart(${index})">Remove</button>
+                    </div>
+                `;
+                cartList.innerHTML += cartItemHtml;
+            });
+        }
+        
+        function removeFromCart(index) {
+            const cartData = JSON.parse(localStorage.getItem('sql_cart_items') || '[]');
+            cartData.splice(index, 1);
+            localStorage.setItem('sql_cart_items', JSON.stringify(cartData));
+            populateCart();
+            updateCartBadge();
+        }
+        
+        function updateCartBadge() {
+            // Sync with inventory page cart badge
+            const cartData = JSON.parse(localStorage.getItem('sql_cart_items') || '[]');
+            localStorage.setItem('sql_cart_count', cartData.length.toString());
+            
+            // Update the cart badge on this page too
+            const cartContainer = document.querySelector('[data-test="shopping-cart-link"]');
+            if (cartContainer) {
+                // Remove existing badge if it exists
+                const existingBadge = document.querySelector('[data-test="shopping-cart-badge"]');
+                if (existingBadge) {
+                    existingBadge.remove();
+                }
+                
+                // Only add badge if cart count > 0
+                if (cartData.length > 0) {
+                    const newBadge = document.createElement('span');
+                    newBadge.className = 'shopping_cart_badge';
+                    newBadge.setAttribute('data-test', 'shopping-cart-badge');
+                    newBadge.textContent = cartData.length.toString();
+                    cartContainer.appendChild(newBadge);
+                }
+            }
+        }
+        
+        function proceedToCheckout() {
+            // Navigate to checkout page
+            window.location.href = '/checkout-step-one.html';
+        }
+        
+        // Initialize cart on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            populateCart();
+            updateCartBadge();
+        });
+    </script>
+</body>
+</html>

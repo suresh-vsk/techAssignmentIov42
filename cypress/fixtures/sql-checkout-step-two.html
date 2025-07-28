@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>SQL Authenticated Checkout Overview</title>
+    <style>
+        .checkout_container { padding: 20px; }
+        .checkout_summary { border: 1px solid #ccc; margin: 10px; padding: 20px; }
+        .summary_info { margin: 10px 0; }
+        .btn_action { background: green; color: white; padding: 10px 20px; margin: 10px; }
+        .btn_secondary { background: gray; color: white; padding: 10px 20px; margin: 10px; }
+        .sql-auth-info { background: #e8f5e8; padding: 10px; margin-bottom: 20px; }
+    </style>
+</head>
+<body>
+    <div class="sql-auth-info">
+        <h2>🗄️ SQL Checkout - Step 2</h2>
+        <p>User: <strong>{{username}}</strong> | Order review and completion</p>
+    </div>
+    
+    <div class="checkout_container">
+        <div class="header_secondary_container">
+            <span class="title">Checkout: Overview</span>
+        </div>
+        
+        <div class="checkout_summary">
+            <div class="summary_info">
+                <h3>Payment Information</h3>
+                <p>SauceCard #31337</p>
+            </div>
+            
+            <div class="summary_info">
+                <h3>Shipping Information</h3>
+                <div id="shipping-info">
+                    <!-- Will be populated from localStorage -->
+                </div>
+            </div>
+            
+            <div class="summary_info">
+                <h3>Cart Total: $<span id="cart-total">0.00</span></h3>
+            </div>
+            
+            <div class="checkout_buttons">
+                <button type="button" class="btn_secondary" data-test="cancel" onclick="window.location.href='/cart.html'">Cancel</button>
+                <button type="button" class="btn_action" data-test="finish" onclick="finishCheckout()">Finish</button>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        function calculateTotal() {
+            const cartData = JSON.parse(localStorage.getItem('sql_cart_items') || '[]');
+            let total = 0;
+            
+            cartData.forEach(item => {
+                const price = parseFloat(item.price.replace('$', ''));
+                total += price;
+            });
+            
+            document.getElementById('cart-total').textContent = total.toFixed(2);
+        }
+        
+        function populateShippingInfo() {
+            const checkoutInfo = JSON.parse(localStorage.getItem('sql_checkout_info') || '{}');
+            const shippingDiv = document.getElementById('shipping-info');
+            
+            if (checkoutInfo.firstName) {
+                shippingDiv.innerHTML = `
+                    <p>${checkoutInfo.firstName} ${checkoutInfo.lastName}</p>
+                    <p>Postal Code: ${checkoutInfo.postalCode}</p>
+                `;
+            }
+        }
+        
+        function finishCheckout() {
+            // Clear cart and redirect to completion page
+            localStorage.removeItem('sql_cart_items');
+            localStorage.setItem('sql_cart_count', '0');
+            window.location.href = '/checkout-complete.html';
+        }
+        
+        // Initialize page
+        document.addEventListener('DOMContentLoaded', function() {
+            calculateTotal();
+            populateShippingInfo();
+        });
+    </script>
+</body>
+</html>
