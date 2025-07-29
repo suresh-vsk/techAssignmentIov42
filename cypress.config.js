@@ -5,8 +5,11 @@ const addCucumberPreprocessorPlugin = require("@badeball/cypress-cucumber-prepro
 
 module.exports = defineConfig({
   e2e: {
-    //Increase the default timer to account for the performance user
-    defaultCommandTimeout: 5000,
+    //Increase the default timer to account for the performance user and API authentication
+    defaultCommandTimeout: 10000,
+    pageLoadTimeout: 30000,
+    requestTimeout: 15000,
+    responseTimeout: 15000,
     specPattern: "**/*.feature",
     async setupNodeEvents(on, config) {
       // This is required for the preprocessor to work

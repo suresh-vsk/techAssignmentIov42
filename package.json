@@ -4,7 +4,17 @@
   "description": "",
   "main": "cypress.config.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "cypress run",
+    "test:headed": "cypress run --headed",
+    "test:chrome": "cypress run --browser chrome",
+    "test:firefox": "cypress run --browser firefox",
+    "open": "cypress open",
+    "test:api": "cypress run --spec 'cypress/e2e/**/*api*.feature'",
+    "test:ui": "cypress run --spec 'cypress/e2e/**/!()*api*.feature'",
+    "test:api-auth": "cypress run --spec 'cypress/e2e/api-auth/**/*.feature'",
+    "test:api-auth:headed": "cypress run --spec 'cypress/e2e/api-auth/**/*.feature' --headed",
+    "test:performance": "cypress run --spec 'cypress/e2e/api-auth/**/*.feature' --browser chrome --headed",
+    "report": "start cypress/reports/cucumber-report.html"
   },
   "private": true,
   "dependencies": {

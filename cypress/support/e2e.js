@@ -15,3 +15,9 @@
 
 // Import commands.js using ES2015 syntax:
 import './commands'
+
+// Import final API authentication strategy (only working solution)
+import './api-auth/finalAuthStrategy'
+
+// Alternatively you can use CommonJS syntax:
+// require('./commands')

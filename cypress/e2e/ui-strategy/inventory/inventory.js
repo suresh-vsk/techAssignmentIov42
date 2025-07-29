@@ -1,7 +1,7 @@
 import { Given, When, Then } from "@badeball/cypress-cucumber-preprocessor";
-import inventoryPage from "../../pages/inventoryPage";
-import loginPage from "../../pages/loginPage";
-import { addProductsToCart, removeProductsFromCart, waitForPageReady } from "../../support/utils";
+import inventoryPage from "../../../pages/inventoryPage";
+import loginPage from "../../../pages/loginPage";
+import { addProductsToCart, removeProductsFromCart, waitForPageReady } from "../../../support/utils";
 
 Given("I am on the products page as {string}", (username) => {
     loginPage.visit()

@@ -1,8 +1,8 @@
 import { Given, When, Then } from "@badeball/cypress-cucumber-preprocessor";
-import inventoryPage from "../../pages/inventoryPage";
-import loginPage from "../../pages/loginPage";
-import cartPage from "../../pages/cartPage";
-import { addProductsToCart, removeProductsFromCart, checkCartBadge } from "../../support/utils";
+import inventoryPage from "../../../pages/inventoryPage";
+import loginPage from "../../../pages/loginPage";
+import cartPage from "../../../pages/cartPage";
+import { addProductsToCart, removeProductsFromCart, checkCartBadge } from "../../../support/utils";
 
 When("I add {int} products to my cart", (productCount) => {
     addProductsToCart(productCount, inventoryPage.inventoryItemAddButton);
