@@ -1,49 +1,55 @@
-# SauceDemo Test Automation Framework
+# SauceDemo Test Automation Framework - Technical Assignment Solution
 
-A comprehensive end-to-end test automation framework built with **Cypress** and **Cucumber BDD** for testing the SauceDemo e-commerce application.
+**Quality Automation Engineer Technical Assignment**  
+**Project URL**: https://www.saucedemo.com/  
+**Objective**: Add additional coverage to a Cypress framework while refactoring broken tests and implementing comprehensive test automation
 
-## 🚀 Framework Overview
+> **📋 Note**: This branch demonstrates the **UI Testing Strategy**. For alternative approaches, see branches `apistratnew` (API Authentication approach) and `sqlapproach` (SQL approach) and corresponding readme.
 
-This framework implements behavior-driven development (BDD) using Gherkin syntax to create readable, maintainable, and comprehensive test scenarios for the SauceDemo website (https://www.saucedemo.com).
+## Framework Overview
 
-### Key Features
-- ✅ **BDD/Cucumber Integration** - Human-readable test scenarios using Gherkin syntax
-- ✅ **Page Object Model** - Organized and maintainable page interactions
-- ✅ **Scenario Outlines** - Data-driven testing with examples tables
-- ✅ **Comprehensive Coverage** - Login, inventory, cart, and checkout functionality
-- ✅ **HTML/JSON Reporting** - Detailed test execution reports
-- ✅ **Utility Functions** - Reusable helper functions for common operations
-- ✅ **Cross-User Testing** - Multiple user personas and authentication scenarios
+Comprehensive Cypress + Cucumber BDD framework for SauceDemo testing:
+- **Complete UI Testing Coverage** - Full automation of login, inventory, cart, and checkout
+- **BDD/Cucumber Integration** - Human-readable test scenarios using Gherkin syntax
+- **Page Object Model** - Organized and maintainable page interactions
 
-## 📁 Project Structure
+### Key Features Implemented
+- **BDD/Cucumber Integration** - Human-readable test scenarios using Gherkin syntax
+- **Page Object Model** - Organized and maintainable page interactions
+- **Comprehensive Coverage** - Login, inventory, cart, and checkout functionality
+- **Performance Monitoring** - Handles slow-loading users (performance_glitch_user)
+- **HTML/JSON Reporting** - Detailed test execution reports
+- **Multi-User Testing** - Different user and authentication scenarios
+
+## Project Structure
 
 ```
 ├── cypress/
 │   ├── e2e/
 │   │   ├── cart/
-│   │   │   └── cart.js           # Cart and checkout step definitions
+│   │   │   └── cart.js               # Cart and checkout step definitions
 │   │   ├── inventory/
-│   │   │   └── inventory.js      # Product inventory step definitions
+│   │   │   └── inventory.js          # Product inventory step definitions
 │   │   ├── login/
-│   │   │   └── login.js          # Authentication step definitions
-│   │   ├── cart.feature          # Cart and checkout test scenarios
-│   │   ├── inventory.feature     # Product management test scenarios
-│   │   └── login.feature         # Login and authentication test scenarios
+│   │   │   └── login.js              # Authentication step definitions
+│   │   ├── cart.feature              # Cart and checkout test scenarios
+│   │   ├── inventory.feature         # Product management test scenarios
+│   │   └── login.feature             # Login and authentication test scenarios
 │   ├── pages/
-│   │   ├── cartPage.js          # Cart and checkout page objects
-│   │   ├── inventoryPage.js     # Product inventory page objects
-│   │   └── loginPage.js         # Login page objects
-│   ├── reports/                 # Generated test reports (HTML/JSON)
+│   │   ├── cartPage.js              # Cart and checkout page objects
+│   │   ├── inventoryPage.js         # Product inventory page objects
+│   │   └── loginPage.js             # Login page objects
+│   ├── reports/                     # Generated test reports (HTML/JSON)
 │   └── support/
-│       ├── commands.js          # Custom Cypress commands
-│       ├── e2e.js              # Global test configuration
-│       └── utils.js            # Shared utility functions
-├── cypress.config.js           # Main Cypress configuration
-├── package.json               # Dependencies and scripts
-└── README.md                 # This documentation
+│       ├── commands.js              # Custom Cypress commands
+│       ├── e2e.js                  # Global test configuration
+│       └── utils.js                # Shared utility functions
+├── cypress.config.js               # Main Cypress configuration
+├── package.json                   # Dependencies and scripts
+└── README.md                      # This documentation
 ```
 
-## 🛠️ Tech Stack
+## Tech Stack
 
 | Technology | Version | Purpose |
 |------------|---------|---------|
@@ -52,13 +58,13 @@ This framework implements behavior-driven development (BDD) using Gherkin syntax
 | **@bahmutov/cypress-esbuild-preprocessor** | ^2.2.4 | Module bundling and preprocessing |
 | **cypress-mochawesome-reporter** | ^4.0.0 | Enhanced reporting capabilities |
 
-## 📋 Prerequisites
+## Prerequisites
 
 - **Node.js** (v16 or higher)
 - **npm** or **yarn**
 - Modern web browser (Chrome recommended)
 
-## 🚀 Installation & Setup
+## Installation & Setup
 
 1. **Clone/Download the project**
    ```bash
@@ -76,7 +82,7 @@ This framework implements behavior-driven development (BDD) using Gherkin syntax
    npx cypress verify
    ```
 
-## 🎯 Test Execution
+## Test Execution
 
 ### Run All Tests (Headless)
 ```bash
@@ -102,40 +108,27 @@ npx cypress run --browser firefox
 npx cypress run --browser edge
 ```
 
-## 📊 Test Coverage
+## Test Coverage
 
 ### Login & Authentication (login.feature)
-- ✅ Successful login with multiple user types
-- ✅ Invalid credential validation
-- ✅ Empty field validation
-- ✅ Locked user handling
-- ✅ Logout functionality
+- Successful login with multiple user types
+- Invalid credential validation
+- Empty field validation
+- Locked user handling
+- Logout functionality
 
 ### Product Inventory (inventory.feature)
-- ✅ Product sorting (price, name, A-Z, Z-A)
-- ✅ Product filtering and search
-- ✅ Add/remove products to cart
-- ✅ Cart badge updates
-- ✅ Product details verification
+- Product sorting (price, name, A-Z, Z-A)
+- Add/remove products to cart
+- Cart badge updates
 
 ### Cart & Checkout (cart.feature)
-- ✅ Complete checkout process
-- ✅ Form validation (missing required fields)
-- ✅ Product quantity management
-- ✅ Security testing (unauthorized access)
-- ✅ Order confirmation verification
+- Complete checkout process
+- Form validation (missing required fields)
+- Security testing (unauthorized access)
+- Order confirmation verification
 
-### Test Users
-| Username | Password | Purpose |
-|----------|----------|---------|
-| `standard_user` | `secret_sauce` | Standard functionality testing |
-| `performance_glitch_user` | `secret_sauce` | Performance testing |
-| `problem_user` | `secret_sauce` | UI issue testing |
-| `error_user` | `secret_sauce` | Error handling testing |
-| `visual_user` | `secret_sauce` | Visual testing |
-| `locked_out_user` | `secret_sauce` | Access restriction testing |
-
-## 📈 Reporting
+## Reporting
 
 ### Automatic Report Generation
 Reports are automatically generated after test execution:
@@ -153,7 +146,7 @@ start cypress/reports/cucumber-report.html
 open cypress/reports/cucumber-report.html
 ```
 
-## 🏗️ Framework Architecture
+## Framework Architecture
 
 ### Page Object Model
 Each page has a dedicated class containing:
@@ -174,7 +167,7 @@ Shared functions for common operations:
 - `checkCartBadge()` - Verify cart count
 - `waitForPageReady()` - Page load synchronization
 
-## 🔧 Configuration
+## Configuration
 
 ### Cypress Configuration (cypress.config.js)
 - Cucumber preprocessor setup
@@ -187,7 +180,50 @@ Shared functions for common operations:
 - Report output locations
 - HTML/JSON report settings
 
-## 🐛 Troubleshooting
+## Handling Negative Tests
+
+### Negative Test Cases
+The framework includes comprehensive negative testing scenarios:
+
+**Login Failures:**
+- Invalid credentials validation
+- Empty field submissions
+
+**Cart Operation Failures:**
+- Adding invalid products
+- Removing non-existent items
+- Session timeout scenarios
+- Unauthorized access attempts
+
+**Checkout Process Failures:**
+- Missing required information
+- Invalid form data
+- Session timeout scenarios (unauthorized access)
+
+## API and SQL Testing Implementation Plan
+
+**Show me how you would plan to implement API and SQL testing into the framework**
+
+### **Implemented Alternative approaches**
+
+have implemented two additional testing approaches as separate branches to demonstrate different approaches:
+
+`apistratnew` branch
+`sqlapproach` branch
+
+### **Branch Navigation**
+```bash
+# View API Authentication Strategy
+git checkout apistratnew
+
+# View SQL Database Strategy  
+git checkout sqlapproach
+
+# Return to UI Strategy
+git checkout master
+```
+
+## Troubleshooting
 
 ### Common Issues
 
@@ -195,58 +231,5 @@ Shared functions for common operations:
 - Solution: Increase timeouts in cypress.config.js
 - Use `cy.wait()` for specific elements
 
-**2. Step definitions not found**
-- Solution: Check stepDefinitions pattern in package.json
-- Verify file paths and imports
-
-**3. Browser compatibility issues**
-- Solution: Test with different browsers
-- Update browser-specific configurations
-
-### Debug Mode
-Run tests with debug output:
-```bash
-DEBUG=cypress:* npx cypress run
-```
-
-## 📝 Writing New Tests
-
-### 1. Add Feature File
-Create `.feature` file in `cypress/e2e/`:
-```gherkin
-Feature: New functionality
-  Scenario: Test scenario
-    Given I am on the application
-    When I perform an action
-    Then I should see expected result
-```
-
-### 2. Implement Step Definitions
-Create corresponding `.js` file with step implementations.
-
-### 3. Update Page Objects
-Add new elements and methods to appropriate page objects.
-
-### 4. Run and Validate
-Execute tests and verify functionality.
-
-## 🤝 Contributing
-
-1. Follow existing code structure and naming conventions
-2. Add appropriate comments and documentation
-3. Ensure all tests pass before committing
-4. Update README for new features or changes
-
-## 📞 Support
-
-For issues or questions:
-1. Check existing documentation
-2. Review Cypress and Cucumber documentation
-3. Verify browser and dependency versions
-4. Check console logs for detailed error messages
-
----
-
-**Framework Version**: 1.0.0  
-**Last Updated**: July 2025  
-**Maintainer**: QE Team
+**2. Element not found errors**
+- Solution: Use more specific selectors

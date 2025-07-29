@@ -4,7 +4,16 @@
   "description": "",
   "main": "cypress.config.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "npx cypress run",
+    "test:headed": "npx cypress run --headed",
+    "test:chrome": "npx cypress run --browser chrome",
+    "test:firefox": "npx cypress run --browser firefox",
+    "test:edge": "npx cypress run --browser edge",
+    "test:open": "npx cypress open",
+    "test:login": "npx cypress run --spec \"cypress/e2e/login.feature\"",
+    "test:inventory": "npx cypress run --spec \"cypress/e2e/inventory.feature\"",
+    "test:cart": "npx cypress run --spec \"cypress/e2e/cart.feature\"",
+    "test:report": "start cypress/reports/cucumber-report.html"
   },
   "private": true,
   "dependencies": {

@@ -4,10 +4,9 @@ class loginPage {
     passwordInput = '[id="password"]';
     submitButton = '[id="login-button"]';
     errorBox = '[data-test="error"]';
-    url = 'https://www.saucedemo.com/'
 
     visit() {
-        cy.visit(this.url)
+        cy.visit('/')
         cy.get(this.loginContainer).should('be.visible');
     }
 

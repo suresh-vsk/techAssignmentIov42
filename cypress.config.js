@@ -5,6 +5,7 @@ const addCucumberPreprocessorPlugin = require("@badeball/cypress-cucumber-prepro
 
 module.exports = defineConfig({
   e2e: {
+    baseUrl: 'https://www.saucedemo.com/',
     //Increase the default timer to account for the performance user
     defaultCommandTimeout: 5000,
     specPattern: "**/*.feature",
